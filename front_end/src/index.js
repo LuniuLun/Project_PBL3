@@ -5,6 +5,7 @@ import SelectCustomer from './Components/selectCustomer';
 import reportWebVitals from './reportWebVitals';
 import SelectClient from './Components/selectClient';
 import Pay from './Components/pay';
+import RootProduct from './Components/printRootProduct';
 
 const selectProduct = ReactDOM.createRoot(document.getElementById('selectProduct'));
 selectProduct.render(
@@ -31,6 +32,13 @@ const pay = ReactDOM.createRoot(document.getElementById('pay'));
 pay.render(
   <React.StrictMode>
     <Pay/>
+  </React.StrictMode>
+);
+
+const rootProduct = ReactDOM.createRoot(document.getElementById('listProduct'));
+rootProduct.render(
+  <React.StrictMode>
+    <RootProduct/>
   </React.StrictMode>
 );
 

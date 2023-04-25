@@ -22,6 +22,12 @@ body {
 input:focus {
     outline: 0;
 }
+
+/* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} */
 .heading .find-product {
     top: 10px;
     left: 10px;
@@ -245,11 +251,20 @@ input:focus {
     max-width: 100px;
 }
 
+#listProduct{
+    max-height: 70%;   
+    max-width: 63%;
+    width: 100%;
+    overflow: auto;
+    overflow-y: hidden;
+}
+
+
 .box-product{
     background-color: #ffffff;
     position: relative;
     max-width: 100%;
-    width: 62%;
+    width: 97%;
     padding: 20px;
     margin: 15px;
     border-radius: 10px;
@@ -290,12 +305,14 @@ input:focus {
     border-radius: 100px;
     border: 0;
     background-color: #e3f5fc;
-    text-align: left;
+    text-align: left; 
 }
 
 .box-product .Price{
     position:absolute;
     left: 80%;
+    border: 0;
+    max-width: 100px;
 }
 
 .box-product .Delete{
