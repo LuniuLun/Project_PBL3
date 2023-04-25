@@ -2,25 +2,29 @@ import react from 'react';
 import Axios from 'axios';
 import ReactDOM from 'react-dom/client';
 import PrintProduct from './printProduct';
-import Cal from './cal';
-let totalQuantity = 0, total = 0, totalDiscount= 0, total_extra_pay = 0,  totalPrice = 0;
-let listProduct = [{id : 0}];
-//let discount = document.querySelector('#cal .discount');
+let listProduct = [{id : 0, quantity: 0}];
+let totalQuantity = document.querySelector('#cal .total-quantity');
+let totalPrice = document.querySelector('#cal .total-price');
+let discount = document.querySelector('#cal .discount');
+let extra_pay = document.querySelector('#cal .extra-pay');
+let total = document.querySelector('#cal .total-pay');
 
+function disFunc() {
+    total.value = parseFloat(totalPrice.value) - parseFloat(discount.value);
+    console.log(total.value);
+}       
+discount.addEventListener("change", disFunc);
+
+function extraFunc() {
+    total.value = parseFloat(total.value) + parseFloat(extra_pay.value);
+}       
+extra_pay.addEventListener("change", extraFunc);
 
 const selectProduct = () => {     
     const [product, setProduct] = react.useState([]);
     const [suggestion, setSuggestion] = react.useState([]);
     const [text, setText] = react.useState('');    
 
-    // let extra_pay = document.querySelector('.extra-pay'); 
-    // discount.addEventListener("change", disFunc);
-
-    // function disFunc() {
-    //     // total = ;
-    //     // createCal(totalQuantity, totalPrice, total);
-    //     console.log(total - parseFloat(discount.value));
-    // }   
     react.useEffect(()=>{
         const loadProduct = async() => {
             const repsonse = await Axios.get("http://localhost:4000/product");
@@ -28,15 +32,6 @@ const selectProduct = () => {
         }
         loadProduct();
     }, []);
-
-    function createCal(totalQuantity, totalDiscount, total_extra_pay, totalPrice, total) {
-        let cal = ReactDOM.createRoot(document.getElementById('cal')); 
-        cal.render(
-        <react.StrictMode>
-            <Cal totalQuantity= {totalQuantity}totalPrice={totalPrice} totalDiscount={totalDiscount} total_extra_pay={total_extra_pay}  total={total}/>
-        </react.StrictMode>
-        );
-    }
 
     function createProduct(MaHang, TenHang, GiaHang, Link) { 
         let isExit = listProduct.some(function(product) {
@@ -47,6 +42,7 @@ const selectProduct = () => {
             let string = "#G" + MaHang +  " .Quantity";
             const quantity = document.querySelector(string);
             quantity.value = parseFloat(quantity.value) + 1;
+            //sửa số lượng trong listproduct
         }
         else{
             let printProduct = ReactDOM.createRoot(document.getElementById("G" + MaHang));        
@@ -65,12 +61,11 @@ const selectProduct = () => {
         setSuggestion([]); 
         setText('');
 
-        totalQuantity += selectQuantity;
-        totalPrice += product.GiaHang * selectQuantity;
-        total = totalPrice;
+        totalQuantity.value = parseInt(totalQuantity.value) + parseInt(selectQuantity);
+        totalPrice.value = parseInt(totalPrice.value) + product.GiaHang * parseFloat(selectQuantity);
+        total.value =  parseInt(totalPrice.value) + parseFloat(extra_pay.value) - parseFloat(discount.value);
         
         createProduct(product.MaHang, product.TenHang, product.GiaHang, product.Anh);
-        createCal(totalQuantity, totalDiscount, total_extra_pay, totalPrice, total);
     }
 
     const onChangeHandler = (text) => {

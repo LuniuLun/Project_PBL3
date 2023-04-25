@@ -28,12 +28,14 @@ const selectCustomer = () => {
     const [product, setProduct] = react.useState([]);
     const [suggestion, setSuggestion] = react.useState([]);
     const [text, setText] = react.useState('');
+    const [id, setId] = react.useState('');
     react.useEffect(()=>{
         const loadProduct = async() => {
             const repsonse = await Axios.get("http://localhost:4000/customer");
             setProduct(repsonse.data.result);
         }
         loadProduct();
+        setId("0");
     }, []);
     // const resultsBox = document.querySelector(".result-box-client");
     // const inputBox = document.getElementById("input-box-client");
@@ -44,15 +46,15 @@ const selectCustomer = () => {
             result = product.filter((keyword) => {
                 return (keyword.Name.toLowerCase().includes(text.toLowerCase()) === true || keyword.SDT.includes(text) === true);
             });
-            console.log(result);
         }
-        console.log(result);
+        else setId("0");
         setSuggestion(result);
         setText(text);
     }
 
     const selectCustomer = (customer) => {
         setText(customer.Name + "-" + customer.SDT);
+        setId(customer.IDKhachHang);
         setSuggestion([]);
     }
     // function display(result) {
@@ -63,7 +65,7 @@ const selectCustomer = () => {
     // }
     return (            
         <div className="find-customer">
-        <input type="text" className="input-box-customer" style={{paddingLeft: '40px'}} placeholder="Tìm khách hàng" onChange={e =>onChangeHandler(e.target.value)} value={text} />
+        <input type="text" id={id} className="input-box-customer" style={{paddingLeft: '40px'}} placeholder="Tìm khách hàng" onChange={e =>onChangeHandler(e.target.value)} value={text} />
         <span href="true"><i className="icon-find-customer fa-solid fa-magnifying-glass" /></span>
         <div className="result-box-customer">                        
             <ul>
