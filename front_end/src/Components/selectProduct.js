@@ -2,8 +2,9 @@ import react from 'react';
 import Axios from 'axios';
 import ReactDOM from 'react-dom/client';
 import PrintProduct from './printProduct';
-let listProduct = [{id : 0, quantity: 0}];
-
+window.addEventListener('beforeunload', function() {
+    localStorage.clear();
+});
 
 const selectProduct = () => {         
     const [product, setProduct] = react.useState([]);
@@ -34,24 +35,40 @@ const selectProduct = () => {
     extra_pay.addEventListener("change", extraFunc);
 
 
-    function createProduct(MaHang, TenHang, GiaHang, Link) { 
-        let isExit = listProduct.some(function(product) {
+    function createProduct(MaHang, TenHang, GiaHang, Link, SoLuong) { 
+        let listIdProduct = JSON.parse(localStorage.getItem("myData"));
+        let list = [];
+        let isExit;
+        if(listIdProduct !== null) {
+            listIdProduct.forEach((product) => {
+                list.push(product);
+            }) 
+        }
+        console.log(list);
+        if (list === '') isExit = false;
+        else isExit = list.some(function(product) {
             return product.id === MaHang;
         });
         if(isExit === true) {
             const quantity = document.querySelector("#G" + MaHang +  " .Quantity");
             quantity.value = parseFloat(quantity.value) + 1;
-            //sửa số lượng trong listproduct
+            listIdProduct.forEach((obj) => {
+                if(obj.id === MaHang) {
+                    obj.quantity++;
+                } 
+            });    
+            localStorage.setItem("myData", JSON.stringify(list));    
         }
         else{
             let printProduct = ReactDOM.createRoot(document.getElementById("G" + MaHang));        
             printProduct.render(
-            <react.StrictMode>        
-                <PrintProduct Name={TenHang} Price={GiaHang} Quantity={1} Link={Link} id={("G" + MaHang)}/>     
-            </react.StrictMode>
+                <react.StrictMode>        
+                    <PrintProduct Name={TenHang} Price={GiaHang} Quantity={1} Link={Link} id={("G" + MaHang)}/>     
+                </react.StrictMode>
             );     
-            let newObject = {id: MaHang, quantity: 1};
-            listProduct.push(newObject);
+            let newObject = {id: MaHang, quantity: 1, max_quantity: SoLuong};
+            list.push(newObject);
+            localStorage.setItem("myData", JSON.stringify(list));
         }   
     }    
     const selectProduct = (product) => {
@@ -63,7 +80,7 @@ const selectProduct = () => {
         totalPrice.value = parseInt(totalPrice.value) + product.GiaHang * parseFloat(selectQuantity);
         total.value =  parseInt(totalPrice.value) + parseFloat(extra_pay.value) - parseFloat(discount.value);
         
-        createProduct(product.MaHang, product.TenHang, product.GiaHang, product.Anh);
+        createProduct(product.MaHang, product.TenHang, product.GiaHang, product.Anh, product.SoLuong);
     }
 
     const onChangeHandler = (text) => {

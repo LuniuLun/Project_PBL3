@@ -22,11 +22,11 @@ exports.getById = function(req, res) {
 //     });
 // };
 
-// exports.update = async function(req, res) {
-//     model.update(req.body, function(err, data) {
-//         res.send({result: data, error: err});
-//     });
-// };
+exports.update = async function(req, res) {
+    model.update(req.body, function(err, data) {
+        res.send({result: data, error: err});
+    });
+};
 // exports.delete =  async function(req, res) {
 //     model.delete(req.params.id, function(err, data) {
 //         res.send({result: data, error: err});

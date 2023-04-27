@@ -46,22 +46,20 @@ module.exports = function() {
     //     });
     // };
 
-    // this.udpate = async function(newData, result) {
-    //     let pool = await cnn;
-    //     let sqlString = "Update tb_HangHoa SET Name = @name, Gender = @gender, DTB = @dtb, ID_Lop = @id_lop where MSSV = @id";
-    //     return await pool.request()
-    //     .input('name', sql.NVarChar, newData.Name)
-    //     .input('gender', sql.Bit, newData.Gender)
-    //     .input('dtb', sql.Int, newData.DTB)
-    //     .input('id_lop', sql.Int, newData.ID_Lop)
-    //     .query(sqlString, function(err, data) {
-    //         if(err) {
-    //             result(true, null);
-    //         }else {
-    //             result(null, newData);
-    //         }
-    //     });
-    // };
+    this.update = async function(newData, result) {
+        let pool = await cnn;
+        let sqlString = "Update tb_HangHoa SET SoLuong = SoLuong - @SoLuongBan where MaHang = @id";
+        return await pool.request()
+        .input('SoLuongBan', sql.Int, newData.SoLuongBan)
+        .input('id', sql.Int, newData.MaHang)
+        .query(sqlString, function(err, data) {
+            if(err) {
+                result(true, null);
+            }else {
+                result(null, newData);
+            }
+        });
+    };
     
     // this.delete = async function(id, result) {
     //     let pool = await cnn;

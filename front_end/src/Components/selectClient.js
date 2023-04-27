@@ -44,7 +44,7 @@ const selectClient = () => {
             <div className="result-box-client">                        
                 <ul>
                     {suggestion.map((client) =>
-                        <li id={client.ID} className='extra-client' onClick = {() => selectClient(client)}>{client.Name} - {client.SDT}</li>
+                        <li key={client.ID} className='extra-client' onClick = {() => selectClient(client)}>{client.Name} - {client.SDT}</li>
                     )}
                 </ul>
             </div>

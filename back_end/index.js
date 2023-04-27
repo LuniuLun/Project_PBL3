@@ -24,10 +24,12 @@ var productRoute = require('./app/routes/product.route');
 var customerRoute = require('./app/routes/customer.route');
 var clientRoute = require('./app/routes/client.route');
 var billRoute = require('./app/routes/bill.route');
+var detailBillRoute = require('./app/routes/detailBill.route');
 productRoute(app);
 customerRoute(app);
 clientRoute(app);
 billRoute(app);
+detailBillRoute(app);
 
 app.listen(4000, function() {
     console.log("http://localhost:4000")
