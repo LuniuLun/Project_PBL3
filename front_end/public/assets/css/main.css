@@ -519,6 +519,7 @@ input::-webkit-inner-spin-button {
     align-items: center;
     justify-content: center;
     padding: 10px ;
+    z-index: 10;
 }
 @keyframes fade-in {
     0% {

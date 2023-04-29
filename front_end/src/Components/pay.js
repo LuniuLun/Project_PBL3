@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import RootProduct from './printRootProduct';
-import Warning from './warningBox'
+import Warning from './warningBox';
+const rootProduct = ReactDOM.createRoot(document.getElementById('listProduct'));
+
 function addBill() {    
     let check = true;
     let TrangThaiDonHang = "Hoan thanh";
@@ -77,7 +79,6 @@ function addBill() {
                                 return response_product.json();
                             });
                         });        
-                        const rootProduct = ReactDOM.createRoot(document.getElementById('listProduct'));
                         rootProduct.render(
                         <React.StrictMode>
                             <RootProduct/>

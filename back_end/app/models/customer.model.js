@@ -15,7 +15,7 @@ module.exports = function() {
 
     this.getOne = async function(id, result) {
         let pool = await cnn;
-        let sqlString = "Select * from tb_HangHoa where TenHang like '%' + @varId + '%'";
+        let sqlString = "Select * from tb_KhachHang where IDKhachHang like '%' + @varId + '%'";
         return await pool.request()
         .input('varId', sql.NVarChar, id)
         .query(sqlString, function(err, data) {
@@ -30,13 +30,17 @@ module.exports = function() {
 
     this.create = async function(newData, result) {
         let pool = await cnn;
-        let sqlString = "Insert into tb_HangHoa(MSSV, Name, Gender, DTB, ID_Lop) values(@mssv, @name, @gender, @dtb, @id_lop)";
+        let sqlString = "Insert into tb_KhachHang(IDRole, Name, Gender, NgaySinh, SDT, DiaChi, DiemTichLuy, NgayTao, Email) values(@IDRole, @Name, @Gender, @NgaySinh, @SDT, @DiaChi,  @DiemTichLuy, @NgayTao, @Email)";
         return await pool.request()
-        .input('mssv', sql.Int, newData.MSSV)
-        .input('name', sql.NVarChar, newData.Name)
-        .input('gender', sql.Bit, newData.Gender)
-        .input('dtb', sql.Int, newData.DTB)
-        .input('id_lop', sql.Int, newData.ID_Lop)
+        .input('IDRole', sql.Int, newData.IDRole)
+        .input('Name', sql.NVarChar, newData.Name)
+        .input('Gender', sql.NVarChar, newData.Gender)
+        .input('NgaySinh', sql.DateTime, newData.NgaySinh)
+        .input('SDT', sql.NVarChar, newData.SDT)
+        .input('DiaChi', sql.NVarChar, newData.DiaChi)
+        .input('DiemTichLuy', sql.Int, newData.DiemTichLuy)
+        .input('NgayTao', sql.DateTime, newData.NgayTao)
+        .input('Email', sql.NVarChar, newData.Email)
         .query(sqlString, function(err, data) {
             if(err) {
                 result(true, null);
