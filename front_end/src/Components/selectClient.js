@@ -28,7 +28,7 @@ const selectClient = () => {
     }
 
     function selectClient(client) {
-        setText(client.Name);
+        setText(client.Name + '-' + client.SDT);
         setId(client.ID);
         setSuggestion([]);  
         // const jsonData = JSON.stringify();

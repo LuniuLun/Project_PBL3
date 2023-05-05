@@ -2,44 +2,42 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import RootProduct from './printRootProduct';
 import Warning from './warningBox';
-const rootProduct = ReactDOM.createRoot(document.getElementById('listProduct'));
-
-function addBill() {    
+import Bill from './bill'
+function addBill() {  
     let check = true;
-    let TrangThaiDonHang = "Hoan thanh";
-    let TrangThaiThanhToan = "true";
-    let cusElement = document.querySelector('.input-box-customer');
-    let clientElement = document.querySelector('.input-box-client');
+    const billState = "Hoan thanh";
+    const paymentState = "true";
+    const cusElement = document.querySelector('.input-box-customer');
+    const clientElement = document.querySelector('.input-box-client');
     const now = new Date();
     const time_bill = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-    let total_quantityElement = document.querySelector('.total-quantity');
-    let total_priceElement = document.querySelector('.total-price');
-    let discountElement = document.querySelector('.discount');
-    let extra_payElement = document.querySelector('.extra-pay');
-    let total_payElement = document.querySelector('.total-pay');
-    let note = document.querySelector('#note');
-    let listIdProduct = JSON.parse(localStorage.getItem("myData"));
-    console.log(listIdProduct);
-    if(listIdProduct === '') check = false;
+    const total_quantityElement = document.querySelector('.total-quantity');
+    const total_priceElement = document.querySelector('.total-price');
+    const discountElement = document.querySelector('.discount');
+    const extra_payElement = document.querySelector('.extra-pay');
+    const total_payElement = document.querySelector('.total-pay');
+    const note = document.querySelector('#note');
+    const listIdProduct = JSON.parse(localStorage.getItem("myData"));
+    if(listIdProduct === null) check = false;
     else listIdProduct.forEach((product) => {
         if (product.quantity > product.max_quantity) {
             check = false;
         }
     });
-    
-    if (parseFloat(total_priceElement.value) !== 0) { 
-        if (check === true) {
-            let object = {
-                TrangThaiDonHang: TrangThaiDonHang,
-                TrangThaiThanhToan: TrangThaiThanhToan,
+
+    if (parseInt(total_priceElement.value) !== 0) { 
+        if (check === true) {    
+            const object = {
+                billState: billState,
+                paymentState: paymentState,
                 ID_User: parseInt(clientElement.id),
-                ID_KhachHang: parseInt(cusElement.id),
-                NgayLap: time_bill,
-                ThanhTien: parseFloat(total_priceElement.value),
-                GiamGia: parseFloat(discountElement.value),
-                ChiecKhau: parseFloat(extra_payElement.value),
-                TongCong: parseFloat(total_payElement.value),
-                GhiChu: note.value
+                ID_Customer: parseInt(cusElement.id),
+                createDay: time_bill,
+                productsMoney: parseFloat(total_priceElement.value),
+                Discount: parseFloat(discountElement.value),
+                extraMoney: parseFloat(extra_payElement.value),
+                Total: parseFloat(total_payElement.value),
+                Note: note.value
             }
             fetch('http://localhost:4000/bill', {
                 method: 'POST',
@@ -51,10 +49,10 @@ function addBill() {
                 response.json().then((res) => {
                     if(res.result !== '') {                    
                         listIdProduct.forEach(element => {
-                            let objDetailBill = {
-                                ID: res.result,
-                                MaHangHoa: element.id,
-                                SoLuong: element.quantity
+                            const objDetailBill = {
+                                ID_bill: res.result,
+                                ID_product: element.id,
+                                Quantity: element.quantity
                             }
                             fetch('http://localhost:4000/detailBill', {
                                 method: 'POST',
@@ -65,9 +63,9 @@ function addBill() {
                             }).then(function(response_detail) {
                                 return response_detail.json();
                             });                        
-                            let objUpdateProduct = {
+                            const objUpdateProduct = {
                                 SoLuongBan: element.quantity,
-                                MaHang: element.id
+                                IDProduct: element.id
                             }
                             fetch('http://localhost:4000/product', {
                                 method: 'PUT',
@@ -79,6 +77,32 @@ function addBill() {
                                 return response_product.json();
                             });
                         });        
+                        if (cusElement.id !== '') {
+                            const upCore = {
+                                id: parseInt(cusElement.id),
+                                DiemTang: 10
+                            }                        
+                            fetch('http://localhost:4000/customer', {
+                                method: 'PUT',
+                                body: JSON.stringify(upCore),
+                                headers: {
+                                    "Content-Type": "application/json"
+                            }
+                            }).then((response_cus) => {
+                                return response_cus.json();
+                            });
+                        }
+
+                        const selectProduct = ReactDOM.createRoot(document.getElementById('printed_bill'));
+                        selectProduct.render(
+                        <React.StrictMode>
+                            <Bill listProduct= {JSON.parse(localStorage.getItem("myData"))} billName ={"HOÁ ĐƠN (" + res.result + ")"} billTime={time_bill} nameCus = {cusElement.value} totalProducts={total_priceElement.value} discount={discountElement.value} total={total_payElement.value}/>
+                        </React.StrictMode>
+                        );                                    
+                        const bill = document.querySelector('.container_bill');
+                        bill.classList.remove('close');   
+
+                        const rootProduct = ReactDOM.createRoot(document.getElementById('listProduct'));
                         rootProduct.render(
                         <React.StrictMode>
                             <RootProduct/>
@@ -91,16 +115,24 @@ function addBill() {
                         total_payElement.value = 0;
                         cusElement.value = '';
                         clientElement.value = '';
+                        note.value = '';
                         localStorage.setItem("myData", JSON.stringify([]));
-                        console.log(listIdProduct);
+                        const warningBox = ReactDOM.createRoot(document.getElementById('warning'));
+                        warningBox.render(
+                            <React.StrictMode>
+                                <Warning content='Cập nhật hoá đơn thành công' name_class='warningBox' color ='#03c000'></Warning>
+                            </React.StrictMode>
+                        )
+                    }else {
+                        console.log("Tạo hoá đơn khong thành công");
                     }
                 });
             });   
         }  else {
-            let warningBox = ReactDOM.createRoot(document.getElementById('warning'));
+            const warningBox = ReactDOM.createRoot(document.getElementById('warning'));
             warningBox.render(
                 <React.StrictMode>
-                    <Warning content='Vượt quá số lượng tồn kho !!!' name_class='warningBox'></Warning>
+                    <Warning content='Vượt quá số lượng tồn kho !!!' name_class='warningBox' ></Warning>
                 </React.StrictMode>
             )
         }

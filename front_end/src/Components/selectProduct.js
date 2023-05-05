@@ -6,7 +6,7 @@ window.addEventListener('beforeunload', function() {
     localStorage.clear();
 });
 
-const selectProduct = () => {         
+let selectProduct = () => {         
     const [product, setProduct] = react.useState([]);
     const [suggestion, setSuggestion] = react.useState([]);
     const [text, setText] = react.useState('');
@@ -24,13 +24,18 @@ const selectProduct = () => {
     }, []);
 
     function disFunc() {
-        total.value = parseFloat(totalPrice.value) - parseFloat(discount.value);
-        console.log(total.value);
+        if(discount.value >= 0) {            
+            if(totalPrice.value > 0) total.value = parseFloat(totalPrice.value) - parseFloat(discount.value);
+        }
+        else discount.value = 0;
     }       
     discount.addEventListener("change", disFunc);
 
     function extraFunc() {
-        total.value = parseFloat(total.value) + parseFloat(extra_pay.value);
+        if(extra_pay.value >= 0) {
+            if( totalPrice.value > 0) total.value = parseFloat(total.value) + parseFloat(extra_pay.value);
+        } 
+        else extra_pay.value = 0;
     }       
     extra_pay.addEventListener("change", extraFunc);
 
@@ -44,7 +49,6 @@ const selectProduct = () => {
                 list.push(product);
             }) 
         }
-        console.log(list);
         if (list === '') isExit = false;
         else isExit = list.some(function(product) {
             return product.id === MaHang;
@@ -60,34 +64,36 @@ const selectProduct = () => {
             localStorage.setItem("myData", JSON.stringify(list));    
         }
         else{
-            let printProduct = ReactDOM.createRoot(document.getElementById("G" + MaHang));        
+            let printProduct = ReactDOM.createRoot(document.getElementById("G" + MaHang));   
             printProduct.render(
                 <react.StrictMode>        
                     <PrintProduct Name={TenHang} Price={GiaHang} Quantity={1} Link={Link} id={("G" + MaHang)}/>     
                 </react.StrictMode>
             );     
-            let newObject = {id: MaHang, quantity: 1, max_quantity: SoLuong};
+            let newObject = {id: MaHang, name: TenHang, quantity: 1, price: GiaHang, max_quantity: SoLuong};
             list.push(newObject);
             localStorage.setItem("myData", JSON.stringify(list));
-        }   
+        }           
+        let productCard = document.querySelector("#G" + MaHang);
+        productCard.classList.remove("closeProduct");     
     }    
-    const selectProduct = (product) => {
+    const choseProduct = (product) => {
         let selectQuantity = 1; 
         setSuggestion([]); 
         setText('');
 
         totalQuantity.value = parseInt(totalQuantity.value) + parseInt(selectQuantity);
-        totalPrice.value = parseInt(totalPrice.value) + product.GiaHang * parseFloat(selectQuantity);
+        totalPrice.value = parseInt(totalPrice.value) + product.Price * parseFloat(selectQuantity);
         total.value =  parseInt(totalPrice.value) + parseFloat(extra_pay.value) - parseFloat(discount.value);
         
-        createProduct(product.MaHang, product.TenHang, product.GiaHang, product.Anh, product.SoLuong);
+        createProduct(product.IDProduct, product.Name, product.Price, product.Picture, product.Quantity);
     }
 
     const onChangeHandler = (text) => {
         let result = [];
         if(text.length > 0) {
             result = product.filter((keyword) => {
-                return keyword.TenHang.toLowerCase().includes(text.toLowerCase());
+                return keyword.Name.toLowerCase().includes(text.toLowerCase());
             });
             console.log(result);
         }
@@ -102,7 +108,7 @@ const selectProduct = () => {
             <i className="icon-Find1 fa-solid fa-magnifying-glass" />
             <div className="result-box">       
                 {suggestion.map((product) =>
-                    <li key={product.MaHang} className='extra-product' onClick = {() => selectProduct(product)}>{product.TenHang}</li>
+                    <li key={product.IDProduct} className='extra-product' onClick = {() => choseProduct(product)}>{product.Name}</li>
                 )}
             </div>
         </div>

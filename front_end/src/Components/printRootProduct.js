@@ -12,7 +12,7 @@ const printRootProduct = () => {
     }, []); 
     return (  
         <>{product.map((p) => 
-            <div key={p.MaHang} id={"G" + p.MaHang}></div>
+            <div key={p.IDProduct} id={"G" + p.IDProduct}></div>
         )}</>
   
     );

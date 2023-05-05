@@ -21,7 +21,7 @@ const selectCustomer = () => {
         let result = [];
         if(text.length > 0) {
             result = customer.filter((keyword) => {
-                return (keyword.Name.toLowerCase().includes(text.toLowerCase()) === true || keyword.SDT.includes(text) === true);
+                return (keyword.Name.toLowerCase().includes(text.toLowerCase()) === true || keyword.phoneNumber.includes(text) === true);
             });
         }
         else setId("0");
@@ -30,8 +30,8 @@ const selectCustomer = () => {
     }
 
     const selectCustomer = (customer) => {
-        setText(customer.Name + "-" + customer.SDT);
-        setId(customer.IDKhachHang);
+        setText(customer.Name + "-" + customer.phoneNumber);
+        setId(customer.ID_Customer);
         setSuggestion([]);
     }
     // function display(result) {
@@ -47,7 +47,7 @@ const selectCustomer = () => {
         <div className="result-box-customer">                        
             <ul>
                 {suggestion.map((customer) =>
-                    <li key={customer.IDKhachHang} className='extra-customer' onClick = {() => selectCustomer(customer)}>{customer.Name} - {customer.SDT}</li>
+                    <li key={customer.ID_Customer} className='extra-customer' onClick = {() => selectCustomer(customer)}>{customer.Name} - {customer.phoneNumber}</li>
                 )}
             </ul>
         </div>

@@ -29,7 +29,7 @@ const addCustomer = () => {
             }
         }
         let warningBox = ReactDOM.createRoot(document.getElementById('warning'));
-        if(number_phoneEle.value !== '') {
+        if(number_phoneEle.value !== '' || nameEle.value !== '') {
             console.log(number_phoneEle.value);
             let check = customer.some((cus) => {
                 return cus.SDT === number_phoneEle.value;
@@ -39,12 +39,12 @@ const addCustomer = () => {
                     IDRole: 1,
                     Name: nameEle.value,
                     Gender: gender,
-                    NgaySinh: birthEle.value,
-                    SDT: number_phoneEle.value,
-                    DiemTichLuy: 0,
-                    DiaChi: addressEle.value,
+                    Birth: birthEle.value,
+                    phoneNumber: number_phoneEle.value,
+                    accumulatedPoints: 0,
+                    Address: addressEle.value,
                     Email: emailEle.value,
-                    NgayTao: time_create
+                    createDay: time_create
                 }
                 console.log(object);
                 fetch('http://localhost:4000/customer', {
@@ -54,8 +54,17 @@ const addCustomer = () => {
                         "Content-Type": "application/json"
                     }
                 }).then((response) => {
-                    return response.json();
+                    response.json().then((res) => {
+                        console.log(res.result);
+                        if(res.result !== '') {
+                            let customerEle = document.querySelector(".input-box-customer");
+                            customerEle.id = res.result;
+                            customerEle.value = nameEle.value + "-" + number_phoneEle.value;
+                        }
+                    });
                 });
+                const modal = document.querySelector(".modal");
+                modal.classList.remove('open');        
             }else {
                 warningBox.render(
                     <react.StrictMode>
@@ -66,7 +75,7 @@ const addCustomer = () => {
         }else {
             warningBox.render(
                 <react.StrictMode>
-                    <Warning content='Vui lòng điền số điện thoại !!!' name_class='warningBox'></Warning>
+                    <Warning content='Vui lòng điền tên và sô điện thoại !!!' name_class='warningBox'></Warning>
                 </react.StrictMode>
             )
         }
