@@ -2,7 +2,7 @@ const {cnn, sql} = require('../../connect');
 module.exports = function() {
     this.getAll = async function(result) {
         let pool = await cnn;
-        let sqlString = "Select * from tb_HangHoa";
+        let sqlString = "Select * from Product";
         return await pool.request().query(sqlString, function(err, data) {
             if(data.recordset.length > 0)  {
                 result(null, data.recordset);
@@ -13,20 +13,20 @@ module.exports = function() {
         });
     };
 
-    this.getOne = async function(id, result) {
-        let pool = await cnn;
-        let sqlString = "Select * from tb_HangHoa where TenHang like '%' + @varId + '%'";
-        return await pool.request()
-        .input('varId', sql.NVarChar, id)
-        .query(sqlString, function(err, data) {
-            if(data.recordset.length > 0)  {
-                result(null, data.recordset[0]);
-            }
-            else {
-                result(true, null);
-            }
-        });
-    };
+    // this.getOne = async function(id, result) {
+    //     let pool = await cnn;
+    //     let sqlString = "Select * from tb_HangHoa where TenHang like '%' + @varId + '%'";
+    //     return await pool.request()
+    //     .input('varId', sql.NVarChar, id)
+    //     .query(sqlString, function(err, data) {
+    //         if(data.recordset.length > 0)  {
+    //             result(null, data.recordset[0]);
+    //         }
+    //         else {
+    //             result(true, null);
+    //         }
+    //     });
+    // };
 
     // this.create = async function(newData, result) {
     //     let pool = await cnn;
@@ -48,10 +48,10 @@ module.exports = function() {
 
     this.update = async function(newData, result) {
         let pool = await cnn;
-        let sqlString = "Update tb_HangHoa SET SoLuong = SoLuong - @SoLuongBan where MaHang = @id";
+        let sqlString = "Update Product SET Quantity = Quantity - @SoLuongBan where IDProduct = @id";
         return await pool.request()
         .input('SoLuongBan', sql.Int, newData.SoLuongBan)
-        .input('id', sql.Int, newData.MaHang)
+        .input('id', sql.Int, newData.IDProduct)
         .query(sqlString, function(err, data) {
             if(err) {
                 result(true, null);

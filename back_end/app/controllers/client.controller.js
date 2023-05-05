@@ -10,11 +10,11 @@ exports.getList = function(req, res) {
     }); 
 };
 
-exports.getById = function(req, res) {
-    model.getOne(req.params.id, function(err, data) {
-        res.send({result: data, error: err});
-    })
-};
+// exports.getById = function(req, res) {
+//     model.getOne(req.params.id, function(err, data) {
+//         res.send({result: data, error: err});
+//     })
+// };
 
 exports.addNew = function(req, res) {
     model.create(req.body, function(err, data) {

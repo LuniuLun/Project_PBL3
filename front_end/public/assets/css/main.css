@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #ecf5fa;
+    background-color: #cfdfe7;
 }
 
 .heading{
@@ -38,6 +38,7 @@ input::-webkit-inner-spin-button {
 }
 
 .find-product input{
+    width: 100%;
     border: 0;
     outline: 0;
     background: transparent;
@@ -55,10 +56,17 @@ input::-webkit-inner-spin-button {
 #box .find-client .result-box-client,
 #box .find-customer .result-box-customer,
 .find-product .result-box {
-    max-height: 300px;
     overflow-y: scroll;
 }
 
+.find-product .result-box {
+    max-height: 300px;
+}
+
+#box .find-client .result-box-client,
+#box .find-customer .result-box-customer{
+    max-height: 170px;
+}
 #box .find-client .result-box-client ul,
 #box .find-customer .result-box-customer ul,
 .find-product .result-box {
@@ -158,7 +166,7 @@ input::-webkit-inner-spin-button {
     width: 35%;
     height: 80%;
     background-color: white;
-    box-shadow: 0 5px 5px #93BFCF;
+    /* box-shadow: 0 5px 5px #93BFCF; */
     border-radius: 15px;
     position: absolute;
     right: 0;
@@ -217,6 +225,7 @@ input::-webkit-inner-spin-button {
     max-width: 100%;
     background-color: #ecf5fa;
     z-index: 1;
+    color: #0071ae;
 }
 
 #box .find-client .icon-find-client,
@@ -269,7 +278,7 @@ input::-webkit-inner-spin-button {
     padding: 20px;
     margin: 15px;
     border-radius: 10px;
-    box-shadow: 0 5px 5px #93BFCF;
+    /* box-shadow: 0 5px 5px #93BFCF; */
     justify-content: center;  
     display: flex;
     align-items: center; 
@@ -324,7 +333,7 @@ input::-webkit-inner-spin-button {
 }
 
 #box .pay {
-    margin-top: 170px;
+    margin-top: 38%;
     width: 100%;
     height: 50px;
     text-align: center;
@@ -350,7 +359,7 @@ input::-webkit-inner-spin-button {
     width: 100%;
     border: 0;
     border-radius: 10px;
-    box-shadow: 0 5px 5px #93BFCF;
+    /* box-shadow: 0 5px 5px #93BFCF; */
 }
 
 
@@ -371,7 +380,7 @@ input::-webkit-inner-spin-button {
     left: 0;
     bottom: 0;
     background-color: #fff;
-    box-shadow: 0 5px 10px #93BFCF;
+    /* box-shadow: 0 5px 10px #93BFCF; */
 }
 
 .footer .Infor {
@@ -499,6 +508,79 @@ input::-webkit-inner-spin-button {
     }
 }
 
+.close {
+    display: none;
+    background-color: rgba(0,0,0,0);
+}
+.closeProduct {
+    display: none;
+}
+.container_bill {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 9999;
+}
+
+.printed_bill {
+    animation: modalFadeIn ease 0.3s;
+    position: fixed;
+    max-width: 400px;
+    left: 32%;    
+    top: 10%;
+    background-color: #fff;
+    padding: 20px;
+}
+
+
+.printed_bill input{
+    border: 0;
+}
+
+.printed_bill label{
+    font-weight: bold;
+    display: inline-block;
+}
+
+.printed_bill .shopName{
+    text-align: center;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.printed_bill .billName{
+    display: block;
+    margin-left: 32%;
+    font-weight: 700;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.printed_bill .infor-product th {
+    padding-left: 10px;
+    text-align: right;
+}
+
+.printed_bill .infor-product td {
+    text-align: right;
+}
+
+.printed_bill .footer-bill {
+    padding: 20px;
+    text-align: center;
+}
+.printed_bill .nav {
+    margin-left: 40%;
+}
+.printed_bill .nav button{
+    border: 0;
+    padding: 10px;
+    margin-left: 40px;
+    cursor: pointer;
+}
 
 .warningBox {
     opacity: 0;
@@ -507,14 +589,14 @@ input::-webkit-inner-spin-button {
     width: 200px;
     height: 100px;
     position: absolute;
-    left: 46%;
-    margin-top: 12%;
-    /* left: 2%;
-    margin-top: 30%; */
-    animation: fade-in 3s forwards;
+    /* left: 46%;
+    margin-top: 25%; */
+    right: 2%;
+    margin-top: 35%;
+    animation: fade-in 4s forwards;
     border-radius: 4px;
     color: #fff;
-    display: flex;
+    display: none;
     text-align: center; 
     align-items: center;
     justify-content: center;

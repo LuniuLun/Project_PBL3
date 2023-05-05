@@ -2,7 +2,7 @@ module.exports = function (app) {
     let clientController = require('../controllers/client.controller');
     app.get('/client', clientController.getList);
     
-    app.get('/client/:id', clientController.getById);    
+    // app.get('/client/:id', clientController.getById);    
     
     //nhận dữ liệu từ client gửi lên thông qua phương thức post (add)
     app.post('/client', clientController.addNew);

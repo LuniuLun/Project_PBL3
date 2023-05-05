@@ -64,24 +64,24 @@
                 </div>
                 <div id="cal">
                     <div style="margin-top: 40px;">
-                        <label for="title">Tổng số lượng hàng</label>
-                        <input type="number" class="total-quantity" readonly value="0">
+                        <label for="TongSoLuong">Tổng số lượng hàng</label>
+                        <input type="number" id="TongSoLuong" class="total-quantity" readonly value="0">
                     </div>
                     <div>
-                        <label for="">Tổng tiền hàng</label>
-                        <input type="number" name="ThanhTien" class="total-price" readonly value="0">
+                        <label for="ThanhTien">Tổng tiền hàng</label>
+                        <input type="number" id="ThanhTien" class="total-price" readonly value="0">
                     </div>
                     <div>
-                        <label for="" class="TieuDe">Giảm giá</label>
-                        <input type="number" name="ChiecKhau" class="discount" value="0">
+                        <label for="ChiecKhau" class="TieuDe">Giảm giá</label>
+                        <input type="number" id="ChiecKhau" class="discount" value="0">
                     </div>
                     <div>
-                        <label for="" class="TieuDe">Thu khác</label>
-                        <input type="number" name="ThuThem" class="extra-pay" value="0">
+                        <label for="ThuThem" class="TieuDe">Thu khác</label>
+                        <input type="number" id="ThuThem" class="extra-pay" value="0">
                     </div>
                     <div>
-                        <label for="" class="TieuDe">Khách cần trả</label>
-                        <input type="number" name="TongCong" class="total-pay" readonly value="0">
+                        <label for="TongCong" class="TieuDe">Khách cần trả</label>
+                        <input type="number" id="TongCong" class="total-pay" readonly value="0">
                     </div>
                 </div>
                 <div id="pay">
@@ -129,7 +129,7 @@
                         </form>
                     </div>
                     <div class="Infor-right">
-                        <label for="number" class="modal-label">Số điện thoại</label>
+                        <label for="number_phone" class="modal-label">Số điện thoại</label>
                         <input type="text" id="number_phone" class="modal-input" autocomplete="off">
 
                         <label for="address" class="modal-label">Địa chỉ</label>
@@ -139,13 +139,59 @@
                         <label for="Email" class="modal-label">Email</label>
                         <input type="email" id="Email" class="modal-input" autocomplete="off">
                     </div>
-                </div>
-                            
+                </div>                            
                 <div class="trans">
                     <div id="addCustomer"></div>
                 </div>
             </div>
         </div>
+        <div class="container_bill close" id="printed_bill">
+            <div >
+                <!-- <div class="header-bill">
+                    <div class="shopName">Twinkle Toes</div>
+                    <input type="text" class="billName" readonly value="HOÁ ĐƠN - BILL(123)">
+                </div>
+                <div class="infor-buy">
+                    <label for="">Thời gian/ When: </label>
+                    <input type="datetime" value="3/5/2023" readonly>
+                    <label>Khách hàng: </label>
+                    <input type="text" value="Khách Nhật" readonly>
+                </div>
+                <div class="infor-product">
+                    <table>
+                        <tr>
+                            <th>Sản phẩm/Product</th>
+                            <th>SL/Count</th>
+                            <th>T.Tiền/Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Giày Nike-
+                                500</td>
+                            <td>2</td>
+                            <td>1000</td>
+                        </tr>
+                    </table>
+                    <div style="text-align: center;">----------------------------------------------------</div>
+                    <div class="Money">                
+                        <label>Tổng tiền hàng:</label>
+                        <input type="text" value="1000" readonly>
+                        <label>Chiếc khấu/discount:</label>
+                        <input type="text" value="0" readonly>
+                        <label>Tổng/Total Amount:</label>
+                        <input type="text" value="1000" readonly>
+                    </div>
+                </div>         
+                <div class="footer-bill">
+                    <div>Hàng đã mua vui lòng không đổi trả</div>
+                    <div>Trân trọng cảm ơn quý khách :)</div>
+                </div>   
+                <div class="nav">
+                    <button style="background-color: #6096B4; width: 65px;" class="okPrint">OK</button>
+                    <button style="background-color: rgb(248, 122, 122);">Cancel</button>
+                </div> -->
+            </div>            
+        </div>
+
         <div id="warning"></div>
         <script src="./assets/js/openAndCloseModal.js"></script>
     </body>

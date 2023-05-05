@@ -2,7 +2,7 @@ const {cnn, sql} = require('../../connect');
 module.exports = function() {
     this.getAll = async function(result) {
         let pool = await cnn;
-        let sqlString = "Select * from TaiKhoanHeThong inner join NguoiDung on ID = ID_user";
+        let sqlString = "Select * from userSystem inner join detailUser on ID = ID_user";
         return await pool.request().query(sqlString, function(err, data) {
             if(data.recordset.length > 0)  {
                 result(null, data.recordset);
@@ -13,20 +13,20 @@ module.exports = function() {
         });
     };
 
-    this.getOne = async function(id, result) {
-        let pool = await cnn;
-        let sqlString = "Select * from tb_HangHoa where TenHang like '%' + @varId + '%'";
-        return await pool.request()
-        .input('varId', sql.NVarChar, id)
-        .query(sqlString, function(err, data) {
-            if(data.recordset.length > 0)  {
-                result(null, data.recordset[0]);
-            }
-            else {
-                result(true, null);
-            }
-        });
-    };
+    // this.getOne = async function(id, result) {
+    //     let pool = await cnn;
+    //     let sqlString = "Select * from tb_HangHoa where TenHang like '%' + @varId + '%'";
+    //     return await pool.request()
+    //     .input('varId', sql.NVarChar, id)
+    //     .query(sqlString, function(err, data) {
+    //         if(data.recordset.length > 0)  {
+    //             result(null, data.recordset[0]);
+    //         }
+    //         else {
+    //             result(true, null);
+    //         }
+    //     });
+    // };
 
     this.create = async function(newData, result) {
         let pool = await cnn;
