@@ -95,7 +95,6 @@ let selectProduct = () => {
             result = product.filter((keyword) => {
                 return keyword.Name.toLowerCase().includes(text.toLowerCase());
             });
-            console.log(result);
         }
         setSuggestion(result);
         setText(text);

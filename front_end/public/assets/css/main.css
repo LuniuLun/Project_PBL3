@@ -340,7 +340,7 @@ input::-webkit-inner-spin-button {
     background-color: #45607e;
     color: #fff;
     border: 0;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
 }
 
@@ -515,7 +515,7 @@ input::-webkit-inner-spin-button {
 .closeProduct {
     display: none;
 }
-.container_bill {
+#printed_bill {
     position: absolute;
     top: 0;
     right: 0;
@@ -525,33 +525,35 @@ input::-webkit-inner-spin-button {
     z-index: 9999;
 }
 
-.printed_bill {
-    animation: modalFadeIn ease 0.3s;
+.printed_bill{
     position: fixed;
-    max-width: 400px;
+    animation: modalFadeIn ease 0.3s;
+    background-color: #fff;
+    overflow-y: scroll;
+    padding: 20px;
     left: 32%;    
     top: 10%;
-    background-color: #fff;
-    padding: 20px;
 }
 
-
-.printed_bill input{
+.bill {    
+    max-width: 400px;
+}
+.bill input{
     border: 0;
 }
 
-.printed_bill label{
+.bill label{
     font-weight: bold;
     display: inline-block;
 }
 
-.printed_bill .shopName{
+.bill .shopName{
     text-align: center;
     padding: 10px;
     text-transform: uppercase;
 }
 
-.printed_bill .billName{
+.bill .billName{
     display: block;
     margin-left: 32%;
     font-weight: 700;
@@ -559,21 +561,21 @@ input::-webkit-inner-spin-button {
     text-transform: uppercase;
 }
 
-.printed_bill .infor-product th {
+.bill .infor-product th {
     padding-left: 10px;
     text-align: right;
 }
 
-.printed_bill .infor-product td {
+.bill .infor-product td {
     text-align: right;
 }
 
-.printed_bill .footer-bill {
+.bill .footer-bill {
     padding: 20px;
     text-align: center;
 }
 .printed_bill .nav {
-    margin-left: 40%;
+    margin-left: 47%;
 }
 .printed_bill .nav button{
     border: 0;

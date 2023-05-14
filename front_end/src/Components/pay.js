@@ -50,50 +50,51 @@ function addBill() {
             }).then(function(response) {
                 response.json().then((res) => {
                     if(res.result !== '') {                    
-                        // listIdProduct.forEach(element => {
-                        //     const objDetailBill = {
-                        //         ID_bill: res.result,
-                        //         ID_product: element.id,
-                        //         Quantity: element.quantity
-                        //     }
-                        //     fetch('http://localhost:4000/detailBill', {
-                        //         method: 'POST',
-                        //         body: JSON.stringify(objDetailBill),
-                        //         headers: {
-                        //             "Content-Type": "application/json"
-                        //         }
-                        //     }).then(function(response_detail) {
-                        //         return response_detail.json();
-                        //     });                        
-                        //     const objUpdateProduct = {
-                        //         SoLuongBan: element.quantity,
-                        //         IDProduct: element.id
-                        //     }
-                        //     fetch('http://localhost:4000/product', {
-                        //         method: 'PUT',
-                        //         body: JSON.stringify(objUpdateProduct),
-                        //         headers: {
-                        //             "Content-Type": "application/json"
-                        //         }
-                        //     }).then((response_product) => {
-                        //         return response_product.json();
-                        //     });
-                        // });        
-                        // if (cusElement.id !== '') {
-                        //     const upCore = {
-                        //         id: parseInt(cusElement.id),
-                        //         DiemTang: 10
-                        //     }                        
-                        //     fetch('http://localhost:4000/customer', {
-                        //         method: 'PUT',
-                        //         body: JSON.stringify(upCore),
-                        //         headers: {
-                        //             "Content-Type": "application/json"
-                        //     }
-                        //     }).then((response_cus) => {
-                        //         return response_cus.json();
-                        //     });
-                        // }
+                        listIdProduct.forEach(element => {
+                            const objDetailBill = {
+                                ID_bill: res.result,
+                                ID_product: element.id,
+                                Quantity: element.quantity,
+                                Price: parseFloat(element.price) * parseFloat(element.quantity) 
+                            }
+                            fetch('http://localhost:4000/detailBill', {
+                                method: 'POST',
+                                body: JSON.stringify(objDetailBill),
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            }).then(function(response_detail) {
+                                return response_detail.json();
+                            });                        
+                            const objUpdateProduct = {
+                                SoLuongBan: element.quantity,
+                                IDProduct: element.id
+                            }
+                            fetch('http://localhost:4000/product', {
+                                method: 'PUT',
+                                body: JSON.stringify(objUpdateProduct),
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            }).then((response_product) => {
+                                return response_product.json();
+                            });
+                        });        
+                        if (cusElement.id !== '') {
+                            const upCore = {
+                                id: parseInt(cusElement.id),
+                                DiemTang: 10
+                            }                        
+                            fetch('http://localhost:4000/customer', {
+                                method: 'PUT',
+                                body: JSON.stringify(upCore),
+                                headers: {
+                                    "Content-Type": "application/json"
+                            }
+                            }).then((response_cus) => {
+                                return response_cus.json();
+                            });
+                        }
                         const selectProduct = ReactDOM.createRoot(document.getElementById('printed_bill'));
                         selectProduct.render(
                             <React.StrictMode>
