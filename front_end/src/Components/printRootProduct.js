@@ -16,6 +16,5 @@ const printRootProduct = () => {
         )}</>
   
     );
-    }
-
+}
 export default printRootProduct;
