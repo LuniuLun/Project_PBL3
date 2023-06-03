@@ -13,11 +13,12 @@ const addCustomer = () => {
     }, []);
 
     function Add() {
-        let nameEle = document.getElementById('Name');
-        let birthEle = document.getElementById('birth');
-        let number_phoneEle = document.getElementById('number_phone');
-        let addressEle = document.getElementById('address');    
-        let emailEle = document.getElementById('Email');    
+        const $ = document.getElementById.bind(document);
+        let nameEle = $('Name');
+        let birthEle = $('birth');
+        let number_phoneEle = $('number_phone');
+        let addressEle = $('address');    
+        let emailEle = $('Email');    
         const now = new Date();
         const time_create = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
         let genderEle = document.getElementsByName('gender');
@@ -28,11 +29,11 @@ const addCustomer = () => {
                 break;
             }
         }
-        let warningBox = ReactDOM.createRoot(document.getElementById('warning'));
+        let warningBox = ReactDOM.createRoot($('warning'));
         if(number_phoneEle.value !== '' || nameEle.value !== '') {
             console.log(number_phoneEle.value);
             let check = customer.some((cus) => {
-                return cus.SDT === number_phoneEle.value;
+                return cus.phoneNumber === number_phoneEle.value;
             });
             if(check === false) {
                 let object = {
@@ -62,10 +63,10 @@ const addCustomer = () => {
                             customerEle.value = nameEle.value + "-" + number_phoneEle.value;
                         }
                     });
-                });
+                }).catch((err) => console.log(err));
                 const modal = document.querySelector(".modal");
                 modal.classList.remove('open');        
-            }else {
+            } else {
                 warningBox.render(
                     <react.StrictMode>
                         <Warning content='Số điện thoại đã tồn tại !!!' name_class='warningBox'></Warning>

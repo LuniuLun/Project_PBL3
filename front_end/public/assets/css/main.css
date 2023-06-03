@@ -536,10 +536,11 @@ input::-webkit-inner-spin-button {
 }
 
 .bill {    
-    max-width: 400px;
+    max-width: 320px;
 }
 .bill input{
-    border: 0;
+    border: 0;   
+    max-width: 140px;
 }
 
 .bill label{
@@ -555,7 +556,7 @@ input::-webkit-inner-spin-button {
 
 .bill .billName{
     display: block;
-    margin-left: 32%;
+    margin-left: 30%;
     font-weight: 700;
     padding: 10px;
     text-transform: uppercase;
@@ -580,7 +581,7 @@ input::-webkit-inner-spin-button {
 .printed_bill .nav button{
     border: 0;
     padding: 10px;
-    margin-left: 40px;
+    margin-left: 10%;
     cursor: pointer;
 }
 

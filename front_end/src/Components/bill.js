@@ -70,7 +70,6 @@ class bill extends Component {
                     <button style={{backgroundColor: 'rgb(248, 122, 122)'}} onClick={() => this.close()}>Cancel</button>
                 </div>
             </div>
-
         );         
     }
 }

@@ -6,19 +6,20 @@ import './pay'
 import Bill from './bill'
 
 function addBill() {  
-    let check = true;
+    let check = true;    
+    const $ = document.querySelector.bind(document);
     const billState = "Hoan thanh";
     const paymentState = "true";
-    const cusElement = document.querySelector('.input-box-customer');
-    const clientElement = document.querySelector('.input-box-client');
+    const cusElement = $('.input-box-customer');
+    const clientElement = $('.input-box-client');
     const now = new Date();
     const time_bill = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-    const total_quantityElement = document.querySelector('.total-quantity');
-    const total_priceElement = document.querySelector('.total-price');
-    const discountElement = document.querySelector('.discount');
-    const extra_payElement = document.querySelector('.extra-pay');
-    const total_payElement = document.querySelector('.total-pay');
-    const note = document.querySelector('#note');
+    const total_quantityElement = $('.total-quantity');
+    const total_priceElement = $('.total-price');
+    const discountElement = $('.discount');
+    const extra_payElement = $('.extra-pay');
+    const total_payElement = $('.total-pay');
+    const note = $('#note');
     const listIdProduct = JSON.parse(localStorage.getItem("myData"));
     if(listIdProduct === null) check = false;
     else listIdProduct.forEach((product) => {
@@ -65,7 +66,7 @@ function addBill() {
                                 }
                             }).then(function(response_detail) {
                                 return response_detail.json();
-                            });                        
+                            }).catch((err) => console.log(err));;                        
                             const objUpdateProduct = {
                                 SoLuongBan: element.quantity,
                                 IDProduct: element.id
@@ -78,7 +79,7 @@ function addBill() {
                                 }
                             }).then((response_product) => {
                                 return response_product.json();
-                            });
+                            }).catch((err) => console.log(err));;
                         });        
                         if (cusElement.id !== '') {
                             const upCore = {
@@ -93,7 +94,7 @@ function addBill() {
                             }
                             }).then((response_cus) => {
                                 return response_cus.json();
-                            });
+                            }).catch((err) => console.log(err));;
                         }
                         const selectProduct = ReactDOM.createRoot(document.getElementById('printed_bill'));
                         selectProduct.render(
@@ -129,7 +130,7 @@ function addBill() {
                         console.log("Tạo hoá đơn khong thành công");
                     }
                 });
-            });   
+            }).catch((err) => console.log(err));;   
         }  else {
             const warningBox = ReactDOM.createRoot(document.getElementById('warning'));
             warningBox.render(
