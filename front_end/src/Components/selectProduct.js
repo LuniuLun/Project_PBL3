@@ -3,18 +3,21 @@ import Axios from 'axios';
 import ReactDOM from 'react-dom/client';
 import PrintProduct from './printProduct';
 window.addEventListener('beforeunload', function() {
-    localStorage.clear();
+    localStorage.clear();    
+    const Obj = {check : false}; 
+    localStorage.setItem("checkDiscount", JSON.stringify(Obj));
 });
 
 let selectProduct = () => {         
     const [product, setProduct] = react.useState([]);
     const [suggestion, setSuggestion] = react.useState([]);
     const [text, setText] = react.useState('');
-    let totalQuantity = document.querySelector('#cal .total-quantity');
-    let totalPrice = document.querySelector('#cal .total-price');
-    let discount = document.querySelector('#cal .discount');
-    let extra_pay = document.querySelector('#cal .extra-pay');
-    let total = document.querySelector('#cal .total-pay');       
+    const $ = document.querySelector.bind(document);
+    let totalQuantity = $('#cal .total-quantity');
+    let totalPrice = $('#cal .total-price');
+    let discount = $('#cal .discount');
+    let extra_pay = $('#cal .extra-pay');
+    let total = $('#cal .total-pay');       
     react.useEffect(()=>{
         const loadProduct = async() => {
             const repsonse = await Axios.get("http://localhost:4000/product");
@@ -39,13 +42,12 @@ let selectProduct = () => {
     }       
     extra_pay.addEventListener("change", extraFunc);
 
-
     function createProduct(MaHang, TenHang, GiaHang, Link, SoLuong) { 
-        let listIdProduct = JSON.parse(localStorage.getItem("myData"));
+        let listProduct = JSON.parse(localStorage.getItem("myData"));
         let list = [];
         let isExit;
-        if(listIdProduct !== null) {
-            listIdProduct.forEach((product) => {
+        if(listProduct !== null) {
+            listProduct.forEach((product) => {
                 list.push(product);
             }) 
         }
@@ -54,9 +56,9 @@ let selectProduct = () => {
             return product.id === MaHang;
         });
         if(isExit === true) {
-            const quantity = document.querySelector("#G" + MaHang +  " .Quantity");
+            const quantity = $("#G" + MaHang +  " .Quantity");
             quantity.value = parseFloat(quantity.value) + 1;
-            listIdProduct.forEach((obj) => {
+            listProduct.forEach((obj) => {
                 if(obj.id === MaHang) {
                     obj.quantity++;
                 } 
@@ -71,22 +73,25 @@ let selectProduct = () => {
                 </react.StrictMode>
             );     
             let newObject = {id: MaHang, name: TenHang, quantity: 1, price: GiaHang, max_quantity: SoLuong};
+            //chua biet add truc tiep vao localstorage
             list.push(newObject);
             localStorage.setItem("myData", JSON.stringify(list));
         }           
-        let productCard = document.querySelector("#G" + MaHang);
+        let productCard = $("#G" + MaHang);
         productCard.classList.remove("closeProduct");     
     }    
     const choseProduct = (product) => {
         let selectQuantity = 1; 
         setSuggestion([]); 
-        setText('');
-
+        setText('');        
+        createProduct(product.IDProduct, product.Name, product.Price, product.Picture, product.Quantity);
         totalQuantity.value = parseInt(totalQuantity.value) + parseInt(selectQuantity);
         totalPrice.value = parseInt(totalPrice.value) + product.Price * parseFloat(selectQuantity);
+        const Dis = JSON.parse(localStorage.getItem("checkDiscount"));
+        if(Dis.check === true) {
+            discount.value = parseFloat(totalPrice.value) * 0.2;
+        }
         total.value =  parseInt(totalPrice.value) + parseFloat(extra_pay.value) - parseFloat(discount.value);
-        
-        createProduct(product.IDProduct, product.Name, product.Price, product.Picture, product.Quantity);
     }
 
     const onChangeHandler = (text) => {

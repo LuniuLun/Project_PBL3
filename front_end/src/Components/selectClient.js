@@ -13,7 +13,7 @@ const selectClient = () => {
             setClient(repsonse.data.result);
         }
         loadProduct();
-        setId("0")
+        setId("0");
     }, []);
     function onChangeHandler(text) {
         let result = [];
@@ -31,11 +31,6 @@ const selectClient = () => {
         setText(client.Name + '-' + client.SDT);
         setId(client.ID);
         setSuggestion([]);  
-        // const jsonData = JSON.stringify();
-        // fs.writeFile('./bill.json', jsonData, (err) => {
-        //   if (err) throw err;
-        //   console.log('Saved!');
-        // });
     }
     return (            
         <div className="find-client">

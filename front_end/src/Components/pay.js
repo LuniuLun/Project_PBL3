@@ -8,6 +8,7 @@ import Bill from './bill'
 function addBill() {  
     let check = true;    
     const $ = document.querySelector.bind(document);
+    const $$ = document.getElementById.bind(document);
     const billState = "Hoan thanh";
     const paymentState = "true";
     const cusElement = $('.input-box-customer');
@@ -66,7 +67,7 @@ function addBill() {
                                 }
                             }).then(function(response_detail) {
                                 return response_detail.json();
-                            }).catch((err) => console.log(err));;                        
+                            }).catch((err) => console.log(err));                      
                             const objUpdateProduct = {
                                 SoLuongBan: element.quantity,
                                 IDProduct: element.id
@@ -79,7 +80,7 @@ function addBill() {
                                 }
                             }).then((response_product) => {
                                 return response_product.json();
-                            }).catch((err) => console.log(err));;
+                            }).catch((err) => console.log(err));
                         });        
                         if (cusElement.id !== '') {
                             const upCore = {
@@ -94,18 +95,18 @@ function addBill() {
                             }
                             }).then((response_cus) => {
                                 return response_cus.json();
-                            }).catch((err) => console.log(err));;
+                            }).catch((err) => console.log(err));
                         }
-                        const selectProduct = ReactDOM.createRoot(document.getElementById('printed_bill'));
+                        const selectProduct = ReactDOM.createRoot($$('printed_bill'));
                         selectProduct.render(
                             <React.StrictMode>
                                 <Bill listProduct= {JSON.parse(localStorage.getItem("myData"))} billName ={"HOÁ ĐƠN (" + res.result + ")"} billTime={time_bill} nameCus = {cusElement.value} totalProducts={total_priceElement.value} discount={discountElement.value} total={total_payElement.value}/>
                             </React.StrictMode>
                         );   
-                        const bill = document.querySelector('.container_bill');
+                        const bill = $('.container_bill');
                         bill.classList.remove('close');   
 
-                        const rootProduct = ReactDOM.createRoot(document.getElementById('listProduct'));
+                        const rootProduct = ReactDOM.createRoot($$('listProduct'));
                         rootProduct.render(
                             <React.StrictMode>
                                 <RootProduct/>
@@ -120,7 +121,7 @@ function addBill() {
                         clientElement.value = '';
                         note.value = '';
                         localStorage.setItem("myData", JSON.stringify([]));
-                        const warningBox = ReactDOM.createRoot(document.getElementById('warning'));
+                        const warningBox = ReactDOM.createRoot($$('warning'));
                         warningBox.render(
                             <React.StrictMode>
                                 <Warning content='Cập nhật hoá đơn thành công' name_class='warningBox' color ='#03c000'></Warning>
@@ -132,7 +133,7 @@ function addBill() {
                 });
             }).catch((err) => console.log(err));;   
         }  else {
-            const warningBox = ReactDOM.createRoot(document.getElementById('warning'));
+            const warningBox = ReactDOM.createRoot($$('warning'));
             warningBox.render(
                 <React.StrictMode>
                     <Warning content='Vượt quá số lượng tồn kho !!!' name_class='warningBox' ></Warning>

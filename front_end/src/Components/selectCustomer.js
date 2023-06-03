@@ -1,7 +1,7 @@
 import react from 'react'
 import Axios from 'axios'
 
-const selectCustomer = () => {         
+const selectCustomer = () => {            
     const [customer, setCustomer] = react.useState([]);
     const [suggestion, setSuggestion] = react.useState([]);
     const [text, setText] = react.useState('');
@@ -14,9 +14,7 @@ const selectCustomer = () => {
         loadProduct();
         setId("0");
     }, []);
-    // const resultsBox = document.querySelector(".result-box-client");
-    // const inputBox = document.getElementById("input-box-client");
-
+    
     const onChangeHandler = (text) => {
         let result = [];
         if(text.length > 0) {
@@ -32,7 +30,18 @@ const selectCustomer = () => {
     const selectCustomer = (customer) => {
         setText(customer.Name + "-" + customer.phoneNumber);
         setId(customer.ID_Customer);
-        setSuggestion([]);
+        setSuggestion([]);              
+          
+        const obj = {check : false}; 
+        if(customer.accumulatedPoints > 100 && customer.ID_Customer !== 0) {
+            obj.check = true;         
+            let total = document.querySelector('#cal .total-pay');     
+            let discount = document.querySelector('#cal .discount');
+            let totalPrice = document.querySelector('#cal .total-price');
+            discount.value = parseFloat(totalPrice.value) * 0.2;            
+            total.value =  parseInt(totalPrice.value) - parseFloat(discount.value);
+        }
+        localStorage.setItem("checkDiscount", JSON.stringify(obj));
     }
     // function display(result) {
     //     const content = result.map((list, i)=> {
