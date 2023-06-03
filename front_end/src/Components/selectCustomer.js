@@ -32,7 +32,7 @@ const selectCustomer = () => {
         setId(customer.ID_Customer);
         setSuggestion([]);              
           
-        const obj = {check : false}; 
+        let obj = {check : false}; 
         if(customer.accumulatedPoints > 100 && customer.ID_Customer !== 0) {
             obj.check = true;         
             let total = document.querySelector('#cal .total-pay');     
