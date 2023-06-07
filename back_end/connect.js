@@ -5,7 +5,7 @@ let config = {
     server: "MSI\\SQLEXPRESS01",
     user: "sa",
     password: "123456",
-    database: "ShopGiayDemo",
+    database: "TwinkleToes",
     driver: "msnodesqlv8",
     option: {
         trustedConnection: true
