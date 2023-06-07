@@ -45,10 +45,6 @@ function changeCal(id, Delete) {
     oldQuantity = parseInt(QuantityEle.value); 
 }
 
-function setValue(id) {
-    changeCal(id);
-}
-
 function deleteProduct(id) {
     const listIdProduct = JSON.parse(localStorage.getItem("myData"));
     listIdProduct.forEach((product, index) => {
@@ -68,7 +64,7 @@ class printProduct extends Component {
             <div className="box-product">             
                 <img className="Picture" src={this.props.Link} alt='true'/>
                 <label className="Name">{this.props.Name}</label>
-                <input className="Quantity" type="number" defaultValue={this.props.Quantity} id={this.props.id} onChange={e => setQuantity(e.target.id)} onBlur={e => setValue(e.target.id)} onFocus={e => getOldValue(e.target.id)}/>
+                <input className="Quantity" type="number" defaultValue={this.props.Quantity} id={this.props.id} onChange={e => setQuantity(e.target.id)} onBlur={e => changeCal(e.target.id)} onFocus={e => getOldValue(e.target.id)}/>
                 <input readOnly className="Price" defaultValue={this.props.Price}></input>
                 <button className="Delete" id={this.props.id} onFocus={e => getOldValue(e.target.id)} ><i id={this.props.id} onClick={e => deleteProduct(e.target.id)} className="fa-sharp fa-solid fa-trash" /></button>
           </div>

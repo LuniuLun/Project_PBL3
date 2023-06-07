@@ -2,7 +2,7 @@ const {cnn, sql} = require('../../connect');
 module.exports = function() {
     this.create = async function(newData, result) {
         let pool = await cnn;
-        let sqlString = "Insert into Bill(billState, paymentState, ID_User, ID_Customer, createDay, productsMoney, Discount, extraMoney, Total, Note) output inserted.ID_Bill values (@billState, @paymentState, @ID_User, @ID_Customer, @createDay, @productsMoney, @Discount, @extraMoney, @Total, @Note)";
+        let sqlString = "Insert into Bill(billState, TypePayment, ID_User, ID_Customer, CreateDay, productsMoney, Discount, ExtraMoney, Total, Note) output inserted.ID_Bill values (@billState, @paymentState, @ID_User, @ID_Customer, @createDay, @productsMoney, @Discount, @extraMoney, @Total, @Note)";
         return await pool.request()
         .input('billState', sql.NVarChar, newData.billState)
         .input('paymentState', sql.Bit, newData.paymentState)

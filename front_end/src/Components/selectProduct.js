@@ -84,7 +84,7 @@ let selectProduct = () => {
         let selectQuantity = 1; 
         setSuggestion([]); 
         setText('');        
-        createProduct(product.IDProduct, product.Name, product.Price, product.Picture, product.Quantity);
+        createProduct(product.IDProduct, product.Title, product.Price, product.Image, product.Quantity);
         totalQuantity.value = parseInt(totalQuantity.value) + parseInt(selectQuantity);
         totalPrice.value = parseInt(totalPrice.value) + product.Price * parseFloat(selectQuantity);
         const Dis = JSON.parse(localStorage.getItem("checkDiscount"));
@@ -98,7 +98,7 @@ let selectProduct = () => {
         let result = [];
         if(text.length > 0) {
             result = product.filter((keyword) => {
-                return keyword.Name.toLowerCase().includes(text.toLowerCase());
+                return keyword.Title.toLowerCase().includes(text.toLowerCase());
             });
         }
         setSuggestion(result);
@@ -112,7 +112,7 @@ let selectProduct = () => {
             <i className="icon-Find1 fa-solid fa-magnifying-glass" />
             <div className="result-box">       
                 {suggestion.map((product) =>
-                    <li key={product.IDProduct} className='extra-product' onClick = {() => choseProduct(product)}>{product.Name}</li>
+                    <li key={product.IDProduct} className='extra-product' onClick = {() => choseProduct(product)}>{product.Title}</li>
                 )}
             </div>
         </div>

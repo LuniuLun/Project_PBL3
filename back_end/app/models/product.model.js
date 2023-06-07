@@ -2,7 +2,7 @@ const {cnn, sql} = require('../../connect');
 module.exports = function() {
     this.getAll = async function(result) {
         let pool = await cnn;
-        let sqlString = "Select * from Product";
+        let sqlString = "select p.Id, p.Title, p.Quantity, p.Price, tb_ProductImage.Image from tb_Product as p inner join tb_ProductImage on p.Id = tb_ProductImage.Id ";
         return await pool.request().query(sqlString, function(err, data) {
             if(data.recordset.length > 0)  {
                 result(null, data.recordset);
